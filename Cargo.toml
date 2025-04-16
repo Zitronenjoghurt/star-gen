@@ -1,0 +1,8 @@
+[package]
+name = "star-gen"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = "0.15.3"
+bevy_panorbit_camera = "0.25.0"
