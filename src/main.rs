@@ -12,6 +12,7 @@ use bevy_panorbit_camera::PanOrbitCameraPlugin;
 
 mod bundles;
 mod components;
+mod physics;
 mod plugins;
 mod resources;
 
