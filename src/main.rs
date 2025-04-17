@@ -1,10 +1,12 @@
+use crate::plugins::inputs::InputPlugin;
 use crate::plugins::startup::StartupPlugin;
 use bevy::app::App;
+use bevy::color::Color;
+use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::pbr::wireframe::{WireframeConfig, WireframePlugin};
-use bevy::prelude::{Color, PluginGroup};
+use bevy::prelude::{default, PluginGroup};
 use bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
 use bevy::render::RenderPlugin;
-use bevy::utils::default;
 use bevy::DefaultPlugins;
 use bevy_panorbit_camera::PanOrbitCameraPlugin;
 
@@ -26,10 +28,13 @@ fn main() {
             WireframePlugin,
         ))
         .insert_resource(WireframeConfig {
-            global: true,
+            global: false,
             default_color: Color::BLACK,
         })
+        .add_plugins(FrameTimeDiagnosticsPlugin)
+        .add_plugins(LogDiagnosticsPlugin::default())
         .add_plugins(PanOrbitCameraPlugin)
         .add_plugins(StartupPlugin)
+        .add_plugins(InputPlugin)
         .run();
 }
