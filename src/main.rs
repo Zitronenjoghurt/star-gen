@@ -1,7 +1,4 @@
-use crate::plugins::camera_events::CameraEventsPlugin;
-use crate::plugins::inputs::InputPlugin;
-use crate::plugins::star_events::StarEventsPlugin;
-use crate::plugins::startup::StartupPlugin;
+use crate::plugins::MainPlugins;
 use bevy::app::App;
 use bevy::color::Color;
 use bevy::pbr::wireframe::{WireframeConfig, WireframePlugin};
@@ -9,7 +6,6 @@ use bevy::prelude::{default, PluginGroup};
 use bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
 use bevy::render::RenderPlugin;
 use bevy::DefaultPlugins;
-use bevy_panorbit_camera::PanOrbitCameraPlugin;
 
 mod bundles;
 mod components;
@@ -34,12 +30,6 @@ fn main() {
             global: false,
             default_color: Color::BLACK,
         })
-        //.add_plugins(FrameTimeDiagnosticsPlugin)
-        //.add_plugins(LogDiagnosticsPlugin::default())
-        .add_plugins(CameraEventsPlugin)
-        .add_plugins(StarEventsPlugin)
-        .add_plugins(PanOrbitCameraPlugin)
-        .add_plugins(StartupPlugin)
-        .add_plugins(InputPlugin)
+        .add_plugins(MainPlugins)
         .run();
 }
