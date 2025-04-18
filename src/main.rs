@@ -1,8 +1,8 @@
 use crate::plugins::MainPlugins;
 use bevy::app::App;
 use bevy::color::Color;
-use bevy::pbr::wireframe::{WireframeConfig, WireframePlugin};
-use bevy::prelude::{default, PluginGroup};
+use bevy::pbr::wireframe::WireframeConfig;
+use bevy::prelude::{default, PluginGroup, Window, WindowPlugin};
 use bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
 use bevy::render::RenderPlugin;
 use bevy::DefaultPlugins;
@@ -14,18 +14,27 @@ mod physics;
 mod plugins;
 mod resources;
 
+pub const VERSION_STRING: &str = "pre-alpha";
+
 fn main() {
     App::new()
-        .add_plugins((
-            DefaultPlugins.set(RenderPlugin {
-                render_creation: RenderCreation::Automatic(WgpuSettings {
-                    features: WgpuFeatures::POLYGON_MODE_LINE,
+        .add_plugins(
+            DefaultPlugins
+                .set(RenderPlugin {
+                    render_creation: RenderCreation::Automatic(WgpuSettings {
+                        features: WgpuFeatures::POLYGON_MODE_LINE,
+                        ..default()
+                    }),
+                    ..default()
+                })
+                .set(WindowPlugin {
+                    primary_window: Some(Window {
+                        title: format!("Star Generator ({VERSION_STRING})"),
+                        ..default()
+                    }),
                     ..default()
                 }),
-                ..default()
-            }),
-            WireframePlugin,
-        ))
+        )
         .insert_resource(WireframeConfig {
             global: false,
             default_color: Color::BLACK,

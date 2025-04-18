@@ -1,13 +1,14 @@
 use crate::bundles::point3d::Point3D;
+use crate::components::star_data::StarData;
 use crate::physics::objects::star::Star;
 use crate::resources::point_resources::PointResources;
 use bevy::prelude::{Assets, Commands, ResMut, StandardMaterial, Vec3};
 use rand::Rng;
 
-const TOTAL_SPREAD: f32 = 50.0;
-const LUMINANCE_FACTOR: f32 = 1.0;
+const TOTAL_SPREAD: f32 = 100.0;
+const LUMINANCE_FACTOR: f32 = 10.0;
 const CUBIC_COUNT: i32 = 4;
-const OFFSET_FACTOR: f32 = 4.0;
+const OFFSET_FACTOR: f32 = 10.0;
 
 pub fn spawn_points(
     mut commands: Commands,
@@ -47,7 +48,7 @@ pub fn spawn_points(
                     sphere_mesh.clone(),
                     material_handle.clone(),
                 );
-                commands.spawn(point);
+                commands.spawn((point, StarData::new(star)));
 
                 new_id += 1;
             }

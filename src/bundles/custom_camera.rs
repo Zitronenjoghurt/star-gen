@@ -26,15 +26,15 @@ impl Default for CustomCamera {
             pan_orbit: PanOrbitCamera::default(),
             tonemapping: Tonemapping::TonyMcMapface,
             bloom: Bloom {
-                intensity: 0.01,
+                intensity: 0.25,
                 low_frequency_boost: 0.5,
                 low_frequency_boost_curvature: 0.95,
                 high_pass_frequency: 0.8,
                 prefilter: BloomPrefilter {
-                    threshold: 0.6,
-                    threshold_softness: 0.2,
+                    threshold: 0.4,
+                    threshold_softness: 0.1,
                 },
-                composite_mode: BloomCompositeMode::EnergyConserving,
+                composite_mode: BloomCompositeMode::Additive,
                 ..default()
             },
         }

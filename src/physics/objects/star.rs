@@ -4,7 +4,7 @@ use crate::physics::types::stellar_class::StellarClass;
 use bevy::prelude::Color;
 use rand::Rng;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Star {
     stellar_class: StellarClass,
     mass: f64,
@@ -32,7 +32,7 @@ impl Star {
         let stellar_class = StellarClass::random(rng);
         let mass = random_stellar_mass(rng, stellar_class);
         let radius = stellar_radius_from_mass(mass);
-        let luminosity = stellar_surface_temperature_from_mass(mass);
+        let luminosity = stellar_luminosity_from_mass(mass);
         let surface_temperature = stellar_surface_temperature_from_mass(mass);
         let color = stellar_color_from_surface_temperature(surface_temperature);
 
