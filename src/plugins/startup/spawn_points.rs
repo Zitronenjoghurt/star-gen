@@ -1,7 +1,13 @@
 use crate::bundles::point3d::Point3D;
+use crate::physics::objects::star::Star;
 use crate::resources::point_resources::PointResources;
 use bevy::prelude::{Assets, Commands, ResMut, StandardMaterial, Vec3};
 use rand::Rng;
+
+const TOTAL_SPREAD: f32 = 50.0;
+const LUMINANCE_FACTOR: f32 = 1.0;
+const CUBIC_COUNT: i32 = 4;
+const OFFSET_FACTOR: f32 = 4.0;
 
 pub fn spawn_points(
     mut commands: Commands,
@@ -11,29 +17,32 @@ pub fn spawn_points(
     let sphere_mesh = point_resources.sphere_mesh();
 
     let mut rng = rand::rng();
-    for x in -5..=5 {
-        for y in -5..=5 {
-            for z in -5..=5 {
-                let red = rng.random::<f32>();
-                let green = rng.random::<f32>();
-                let blue = rng.random::<f32>();
-                let luminance = rng.random_range(10.0..100.0) as f32;
+    for x in -CUBIC_COUNT..=CUBIC_COUNT {
+        for y in -CUBIC_COUNT..=CUBIC_COUNT {
+            for z in -CUBIC_COUNT..=CUBIC_COUNT {
+                let star = Star::new_random(&mut rng);
+                let color = star.get_color().to_linear();
 
-                let material_handle =
-                    point_resources.get_material(red, blue, green, luminance, &mut materials);
+                let material_handle = point_resources.get_material(
+                    color.red,
+                    color.green,
+                    color.blue,
+                    star.get_luminosity() as f32 * LUMINANCE_FACTOR,
+                    &mut materials,
+                );
 
-                let offset_x = rng.random::<f32>() * 4.0 - 1.0;
-                let offset_y = rng.random::<f32>() * 4.0 - 1.0;
-                let offset_z = rng.random::<f32>() * 4.0 - 1.0;
+                let offset_x = rng.random::<f32>() * OFFSET_FACTOR - 1.0;
+                let offset_y = rng.random::<f32>() * OFFSET_FACTOR - 1.0;
+                let offset_z = rng.random::<f32>() * OFFSET_FACTOR - 1.0;
 
                 let point = Point3D::new(
                     0,
                     Vec3::new(
-                        x as f32 + offset_x,
-                        y as f32 + offset_y,
-                        z as f32 + offset_z,
+                        (x as f32 + offset_x) * TOTAL_SPREAD,
+                        (y as f32 + offset_y) * TOTAL_SPREAD,
+                        (z as f32 + offset_z) * TOTAL_SPREAD,
                     ),
-                    0.1,
+                    star.get_radius() as f32,
                     sphere_mesh.clone(),
                     material_handle.clone(),
                 );

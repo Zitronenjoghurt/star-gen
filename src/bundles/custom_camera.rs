@@ -1,4 +1,4 @@
-use bevy::core_pipeline::bloom::Bloom;
+use bevy::core_pipeline::bloom::{Bloom, BloomCompositeMode, BloomPrefilter};
 use bevy::core_pipeline::tonemapping::Tonemapping;
 use bevy::math::Vec3;
 use bevy::prelude::{default, Bundle, Camera, Camera3d, Transform};
@@ -25,7 +25,18 @@ impl Default for CustomCamera {
             transform: Transform::from_xyz(5.0, 5.0, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
             pan_orbit: PanOrbitCamera::default(),
             tonemapping: Tonemapping::TonyMcMapface,
-            bloom: Bloom::NATURAL,
+            bloom: Bloom {
+                intensity: 0.01,
+                low_frequency_boost: 0.5,
+                low_frequency_boost_curvature: 0.95,
+                high_pass_frequency: 0.8,
+                prefilter: BloomPrefilter {
+                    threshold: 0.6,
+                    threshold_softness: 0.2,
+                },
+                composite_mode: BloomCompositeMode::EnergyConserving,
+                ..default()
+            },
         }
     }
 }
