@@ -10,10 +10,10 @@ pub struct Point3D {
     mesh: Mesh3d,
     material: MeshMaterial3d<StandardMaterial>,
     transform: Transform,
-    pub global_transform: GlobalTransform,
-    pub visibility: Visibility,
-    pub inherited_visibility: InheritedVisibility,
-    pub view_visibility: ViewVisibility,
+    global_transform: GlobalTransform,
+    visibility: Visibility,
+    inherited_visibility: InheritedVisibility,
+    view_visibility: ViewVisibility,
 }
 
 impl Point3D {

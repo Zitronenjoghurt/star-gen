@@ -17,6 +17,7 @@ pub fn spawn_points(
     let sphere_mesh = point_resources.sphere_mesh();
 
     let mut rng = rand::rng();
+    let mut new_id: u64 = 0;
     for x in -CUBIC_COUNT..=CUBIC_COUNT {
         for y in -CUBIC_COUNT..=CUBIC_COUNT {
             for z in -CUBIC_COUNT..=CUBIC_COUNT {
@@ -36,7 +37,7 @@ pub fn spawn_points(
                 let offset_z = rng.random::<f32>() * OFFSET_FACTOR - 1.0;
 
                 let point = Point3D::new(
-                    0,
+                    new_id,
                     Vec3::new(
                         (x as f32 + offset_x) * TOTAL_SPREAD,
                         (y as f32 + offset_y) * TOTAL_SPREAD,
@@ -47,6 +48,8 @@ pub fn spawn_points(
                     material_handle.clone(),
                 );
                 commands.spawn(point);
+
+                new_id += 1;
             }
         }
     }
