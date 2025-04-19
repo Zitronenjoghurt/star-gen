@@ -1,11 +1,13 @@
+use crate::events::star_delete_all::StarDeleteAllEvent;
 use crate::resources::window_manager::WindowManager;
-use bevy::prelude::ResMut;
+use bevy::prelude::{EventWriter, ResMut};
 use bevy_egui::egui::{Id, Modal, Sides};
 use bevy_egui::EguiContexts;
 
 pub fn render_generate_cubic_modal(
     mut contexts: EguiContexts,
     mut window_manager: ResMut<WindowManager>,
+    mut star_delete_all: EventWriter<StarDeleteAllEvent>,
 ) {
     let Some(ctx) = contexts.try_ctx_mut() else {
         return;
@@ -20,7 +22,7 @@ pub fn render_generate_cubic_modal(
             |_ui| {},
             |ui| {
                 if ui.button("Cancel").clicked() {
-                    ui.close_menu();
+                    star_delete_all.send(StarDeleteAllEvent);
                 }
             },
         );

@@ -1,13 +1,17 @@
 use crate::events::star_spawn::StarSpawnEvent;
-use bevy::prelude::{EventWriter, Vec3};
+use crate::resources::star_store::StarStore;
+use bevy::prelude::{EventWriter, ResMut, Vec3};
 use rand::Rng;
 
 const TOTAL_SPREAD: f32 = 100.0;
 const CUBIC_COUNT: i32 = 4;
 const OFFSET_FACTOR: f32 = 10.0;
 
-pub fn spawn_points(mut star_spawn_event: EventWriter<StarSpawnEvent>) {
-    let mut rng = rand::rng();
+pub fn spawn_points(
+    mut star_spawn_event: EventWriter<StarSpawnEvent>,
+    mut star_store: ResMut<StarStore>,
+) {
+    let rng = star_store.get_rng();
     for x in -CUBIC_COUNT..=CUBIC_COUNT {
         for y in -CUBIC_COUNT..=CUBIC_COUNT {
             for z in -CUBIC_COUNT..=CUBIC_COUNT {
@@ -21,7 +25,7 @@ pub fn spawn_points(mut star_spawn_event: EventWriter<StarSpawnEvent>) {
                     (z as f32 + offset_z) * TOTAL_SPREAD,
                 );
 
-                star_spawn_event.send(StarSpawnEvent::new(position));
+                star_spawn_event.send(StarSpawnEvent::random(rng, position));
             }
         }
     }

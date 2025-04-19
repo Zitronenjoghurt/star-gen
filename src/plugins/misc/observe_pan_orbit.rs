@@ -14,6 +14,6 @@ pub fn observe_pan_orbit_camera(
 
     if selected_star.get_id().is_some() && Some(camera.target_focus) != selected_star.get_position()
     {
-        unselect_star_event.send(StarUnselectEvent::default());
+        unselect_star_event.send(StarUnselectEvent);
     }
 }

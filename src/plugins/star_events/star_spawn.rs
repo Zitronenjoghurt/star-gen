@@ -12,10 +12,8 @@ pub fn handle_star_spawn(
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
 ) {
-    let mut rng = rand::rng();
-
     for event in star_spawn_event.read() {
-        let star = event.generate_star(&mut rng);
+        let star = event.get_star().clone();
         let id = star_store.add_star(star.clone());
         let bundle = StarBundle::new(star, id, &mut meshes, &mut materials);
         let entity = commands.spawn(bundle).id();

@@ -95,7 +95,7 @@ pub fn render_selected_star_window(
             if let Some(id) = selected_star.get_id() {
                 ui.vertical_centered(|ui| {
                     if ui.button("Delete").clicked() {
-                        star_unselect_event.send(StarUnselectEvent::default());
+                        star_unselect_event.send(StarUnselectEvent);
                         star_delete_event.send(StarDeleteEvent::new(id));
                     }
                 });
