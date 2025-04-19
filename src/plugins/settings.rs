@@ -1,6 +1,7 @@
 use crate::plugins::settings::bloom::apply_bloom_settings;
 use crate::plugins::settings::wireframe::apply_wireframe_settings;
-use crate::resources::simulation_settings::{BloomSettings, WireframeSettings};
+use crate::resources::settings::bloom::BloomSettings;
+use crate::resources::settings::wireframe::WireframeSettings;
 use crate::resources::window_manager::WindowManager;
 use bevy::prelude::{resource_changed, App, IntoSystemConfigs, Plugin, Update};
 

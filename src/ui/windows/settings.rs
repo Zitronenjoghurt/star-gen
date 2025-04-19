@@ -1,4 +1,5 @@
-use crate::resources::simulation_settings::{BloomSettings, WireframeSettings};
+use crate::resources::settings::bloom::BloomSettings;
+use crate::resources::settings::wireframe::WireframeSettings;
 use crate::resources::window_manager::WindowManager;
 use bevy::prelude::ResMut;
 use bevy_egui::egui;

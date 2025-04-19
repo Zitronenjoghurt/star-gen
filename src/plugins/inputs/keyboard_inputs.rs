@@ -1,4 +1,5 @@
-use crate::resources::simulation_settings::{BloomSettings, WireframeSettings};
+use crate::resources::settings::bloom::BloomSettings;
+use crate::resources::settings::wireframe::WireframeSettings;
 use bevy::prelude::{ButtonInput, KeyCode, Res, ResMut};
 
 pub const WIREFRAME_KEYCODE: KeyCode = KeyCode::KeyW;

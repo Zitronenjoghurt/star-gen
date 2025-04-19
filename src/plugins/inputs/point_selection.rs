@@ -10,7 +10,7 @@ pub fn point_selection(
     mut selectable_points: Query<(&mut SelectablePoint, &mut Transform, &GlobalTransform)>,
     mut star_clicked_event: EventWriter<StarClickedEvent>,
 ) {
-    if !mouse_input.just_released(MouseButton::Middle) {
+    if !mouse_input.just_released(MouseButton::Left) {
         return;
     }
 

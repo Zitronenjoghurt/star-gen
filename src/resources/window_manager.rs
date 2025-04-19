@@ -2,6 +2,7 @@ use bevy::prelude::Resource;
 
 #[derive(Debug, Default, Resource)]
 pub struct WindowManager {
-    pub settings: bool,
+    pub bloom_settings: bool,
     pub diagnostics: bool,
+    pub settings: bool,
 }

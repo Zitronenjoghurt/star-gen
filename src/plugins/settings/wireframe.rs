@@ -1,4 +1,4 @@
-use crate::resources::simulation_settings::WireframeSettings;
+use crate::resources::settings::wireframe::WireframeSettings;
 use bevy::pbr::wireframe::WireframeConfig;
 use bevy::prelude::{Res, ResMut};
 
