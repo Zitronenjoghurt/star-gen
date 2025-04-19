@@ -13,6 +13,7 @@ mod events;
 mod physics;
 mod plugins;
 mod resources;
+mod ui;
 
 pub const VERSION_STRING: &str = "pre-alpha";
 
