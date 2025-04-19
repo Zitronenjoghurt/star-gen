@@ -1,9 +1,13 @@
 use crate::resources::window_manager::WindowManager;
 use bevy::prelude::ResMut;
 use bevy_egui::egui;
-use bevy_egui::egui::Context;
+use bevy_egui::EguiContexts;
 
-pub fn draw_top_bar(ctx: &mut Context, window_manager: &mut ResMut<WindowManager>) {
+pub fn render_top_bar(mut contexts: EguiContexts, mut window_manager: ResMut<WindowManager>) {
+    let Some(ctx) = contexts.try_ctx_mut() else {
+        return;
+    };
+
     egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
         egui::menu::bar(ui, |ui| {
             ui.menu_button("Windows", |ui| {

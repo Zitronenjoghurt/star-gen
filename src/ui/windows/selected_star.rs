@@ -2,16 +2,19 @@ use crate::events::star_delete::StarDeleteEvent;
 use crate::events::star_unselect::StarUnselectEvent;
 use crate::resources::selected_star::SelectedStar;
 use bevy::prelude::{EventWriter, Res};
-use bevy_egui::egui;
-use bevy_egui::egui::Context;
+use bevy_egui::{egui, EguiContexts};
 use egui_extras::{Column, TableBuilder};
 
-pub fn draw_selected_star_window(
-    ctx: &mut Context,
-    selected_star: &Res<SelectedStar>,
-    star_delete_event: &mut EventWriter<StarDeleteEvent>,
-    star_unselect_event: &mut EventWriter<StarUnselectEvent>,
+pub fn render_selected_star_window(
+    mut contexts: EguiContexts,
+    selected_star: Res<SelectedStar>,
+    mut star_delete_event: EventWriter<StarDeleteEvent>,
+    mut star_unselect_event: EventWriter<StarUnselectEvent>,
 ) {
+    let Some(ctx) = contexts.try_ctx_mut() else {
+        return;
+    };
+
     egui::Window::new("Selected Star")
         .title_bar(true)
         .resizable(false)

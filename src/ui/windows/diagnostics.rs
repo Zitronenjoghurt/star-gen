@@ -3,14 +3,17 @@ use bevy::diagnostic::{
     DiagnosticsStore, EntityCountDiagnosticsPlugin, FrameTimeDiagnosticsPlugin,
 };
 use bevy::prelude::{Res, ResMut};
-use bevy_egui::egui;
-use bevy_egui::egui::Context;
+use bevy_egui::{egui, EguiContexts};
 
-pub fn draw_diagnostics_window(
-    ctx: &mut Context,
-    window_manager: &mut ResMut<WindowManager>,
-    diagnostics: &Res<DiagnosticsStore>,
+pub fn render_diagnostics_window(
+    mut contexts: EguiContexts,
+    mut window_manager: ResMut<WindowManager>,
+    diagnostics: Res<DiagnosticsStore>,
 ) {
+    let Some(ctx) = contexts.try_ctx_mut() else {
+        return;
+    };
+
     let fps = diagnostics.get_measurement(&FrameTimeDiagnosticsPlugin::FPS);
     let frame_time = diagnostics.get_measurement(&FrameTimeDiagnosticsPlugin::FRAME_TIME);
     let entity_count = diagnostics.get_measurement(&EntityCountDiagnosticsPlugin::ENTITY_COUNT);

@@ -2,14 +2,17 @@ use crate::resources::settings::bloom::BloomSettings;
 use crate::resources::window_manager::WindowManager;
 use crate::ui::elements::settings_slider::draw_settings_slider;
 use bevy::prelude::ResMut;
-use bevy_egui::egui;
-use bevy_egui::egui::Context;
+use bevy_egui::{egui, EguiContexts};
 
-pub fn draw_bloom_settings_window(
-    ctx: &mut Context,
-    window_manager: &mut ResMut<WindowManager>,
-    bloom_settings: &mut ResMut<BloomSettings>,
+pub fn render_bloom_settings_window(
+    mut contexts: EguiContexts,
+    mut window_manager: ResMut<WindowManager>,
+    mut bloom_settings: ResMut<BloomSettings>,
 ) {
+    let Some(ctx) = contexts.try_ctx_mut() else {
+        return;
+    };
+
     egui::Window::new("Bloom Settings")
         .open(&mut window_manager.bloom_settings)
         .resizable(false)

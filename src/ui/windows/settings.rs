@@ -2,15 +2,18 @@ use crate::resources::settings::bloom::BloomSettings;
 use crate::resources::settings::wireframe::WireframeSettings;
 use crate::resources::window_manager::WindowManager;
 use bevy::prelude::ResMut;
-use bevy_egui::egui;
-use bevy_egui::egui::Context;
+use bevy_egui::{egui, EguiContexts};
 
-pub fn draw_settings_window(
-    ctx: &mut Context,
-    window_manager: &mut ResMut<WindowManager>,
-    bloom_settings: &mut ResMut<BloomSettings>,
-    wireframe_settings: &mut ResMut<WireframeSettings>,
+pub fn render_settings_window(
+    mut contexts: EguiContexts,
+    mut window_manager: ResMut<WindowManager>,
+    mut bloom_settings: ResMut<BloomSettings>,
+    mut wireframe_settings: ResMut<WireframeSettings>,
 ) {
+    let Some(ctx) = contexts.try_ctx_mut() else {
+        return;
+    };
+
     egui::Window::new("Settings")
         .open(&mut window_manager.settings)
         .show(ctx, |ui| {
