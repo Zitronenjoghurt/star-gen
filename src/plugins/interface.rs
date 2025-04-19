@@ -1,5 +1,6 @@
 use crate::plugins::interface::absorb_egui_inputs::absorb_egui_inputs;
 use crate::resources::selected_star::SelectedStar;
+use crate::resources::ui::generate_cubic_modal_state::GenerateCubicModalState;
 use crate::resources::window_manager::WindowManager;
 use crate::ui::misc::top_bar::render_top_bar;
 use crate::ui::modals::generate_cubic::render_generate_cubic_modal;
@@ -22,6 +23,7 @@ impl Plugin for InterfacePlugin {
                 .after(bevy_egui::input::write_egui_input_system)
                 .before(bevy_egui::begin_pass_system),
         )
+        .insert_resource(GenerateCubicModalState::default())
         .add_systems(Update, render_top_bar)
         .add_systems(
             Update,

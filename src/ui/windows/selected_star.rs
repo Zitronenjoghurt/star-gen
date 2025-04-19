@@ -1,5 +1,4 @@
 use crate::events::star_delete::StarDeleteEvent;
-use crate::events::star_unselect::StarUnselectEvent;
 use crate::resources::selected_star::SelectedStar;
 use bevy::prelude::{EventWriter, Res};
 use bevy_egui::{egui, EguiContexts};
@@ -9,7 +8,6 @@ pub fn render_selected_star_window(
     mut contexts: EguiContexts,
     selected_star: Res<SelectedStar>,
     mut star_delete_event: EventWriter<StarDeleteEvent>,
-    mut star_unselect_event: EventWriter<StarUnselectEvent>,
 ) {
     let Some(ctx) = contexts.try_ctx_mut() else {
         return;
@@ -93,12 +91,10 @@ pub fn render_selected_star_window(
             });
 
             if let Some(id) = selected_star.get_id() {
-                ui.vertical_centered(|ui| {
-                    if ui.button("Delete").clicked() {
-                        star_unselect_event.send(StarUnselectEvent);
-                        star_delete_event.send(StarDeleteEvent::new(id));
-                    }
-                });
+                ui.add_space(15.0);
+                if ui.button("Delete").clicked() {
+                    star_delete_event.send(StarDeleteEvent::new(id));
+                }
             }
         });
 }

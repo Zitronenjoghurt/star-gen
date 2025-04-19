@@ -14,6 +14,7 @@ mod physics;
 mod plugins;
 mod resources;
 mod ui;
+mod utils;
 
 pub const VERSION_STRING: &str = "pre-alpha";
 

@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+base64 = "0.22.1"
 bevy = "0.15.3"
 bevy_egui = "0.33.0"
 bevy_panorbit_camera = "0.25.0"

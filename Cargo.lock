@@ -4657,6 +4657,7 @@ checksum = "6eae92052b72ef70dafa16eddbabffc77e5ca3574be2f7bc1127b36f0a7ad7f2"
 name = "star-gen"
 version = "0.1.0"
 dependencies = [
+ "base64 0.22.1",
  "bevy",
  "bevy_egui",
  "bevy_panorbit_camera",
