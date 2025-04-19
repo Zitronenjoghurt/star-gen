@@ -1,3 +1,5 @@
+use crate::events::star_delete::StarDeleteEvent;
+use crate::events::star_unselect::StarUnselectEvent;
 use crate::resources::selected_star::SelectedStar;
 use crate::resources::settings::bloom::BloomSettings;
 use crate::resources::settings::wireframe::WireframeSettings;
@@ -8,9 +10,10 @@ use crate::ui::windows::diagnostics::draw_diagnostics_window;
 use crate::ui::windows::selected_star::draw_selected_star_window;
 use crate::ui::windows::settings::draw_settings_window;
 use bevy::diagnostic::DiagnosticsStore;
-use bevy::prelude::{Res, ResMut};
+use bevy::prelude::{EventWriter, Res, ResMut};
 use bevy_egui::EguiContexts;
 
+#[allow(clippy::too_many_arguments)]
 pub fn user_interface(
     mut contexts: EguiContexts,
     mut window_manager: ResMut<WindowManager>,
@@ -18,6 +21,8 @@ pub fn user_interface(
     selected_star: Res<SelectedStar>,
     mut bloom_settings: ResMut<BloomSettings>,
     mut wireframe_settings: ResMut<WireframeSettings>,
+    mut star_delete_event: EventWriter<StarDeleteEvent>,
+    mut star_unselect_event: EventWriter<StarUnselectEvent>,
 ) {
     let Some(ctx) = contexts.try_ctx_mut() else {
         return;
@@ -43,6 +48,11 @@ pub fn user_interface(
     }
 
     if selected_star.get_id().is_some() {
-        draw_selected_star_window(ctx, &selected_star);
+        draw_selected_star_window(
+            ctx,
+            &selected_star,
+            &mut star_delete_event,
+            &mut star_unselect_event,
+        );
     }
 }

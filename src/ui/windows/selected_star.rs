@@ -1,10 +1,17 @@
+use crate::events::star_delete::StarDeleteEvent;
+use crate::events::star_unselect::StarUnselectEvent;
 use crate::resources::selected_star::SelectedStar;
-use bevy::prelude::Res;
+use bevy::prelude::{EventWriter, Res};
 use bevy_egui::egui;
 use bevy_egui::egui::Context;
 use egui_extras::{Column, TableBuilder};
 
-pub fn draw_selected_star_window(ctx: &mut Context, selected_star: &Res<SelectedStar>) {
+pub fn draw_selected_star_window(
+    ctx: &mut Context,
+    selected_star: &Res<SelectedStar>,
+    star_delete_event: &mut EventWriter<StarDeleteEvent>,
+    star_unselect_event: &mut EventWriter<StarUnselectEvent>,
+) {
     egui::Window::new("Selected Star")
         .title_bar(true)
         .resizable(false)
@@ -67,7 +74,28 @@ pub fn draw_selected_star_window(ctx: &mut Context, selected_star: &Res<Selected
                             ui.label(format!("{:.2}L☉", data.get_luminosity()));
                         });
                     });
+                    body.row(10.0, |mut row| {
+                        row.col(|ui| {
+                            ui.strong("Position");
+                        });
+                        row.col(|ui| {
+                            let position = data.get_position();
+                            ui.label(format!(
+                                "({:.2}, {:.2}, {:.2})",
+                                position.x, position.y, position.z
+                            ));
+                        });
+                    });
                 }
             });
+
+            if let Some(id) = selected_star.get_id() {
+                ui.vertical_centered(|ui| {
+                    if ui.button("Delete").clicked() {
+                        star_unselect_event.send(StarUnselectEvent::default());
+                        star_delete_event.send(StarDeleteEvent::new(id));
+                    }
+                });
+            }
         });
 }

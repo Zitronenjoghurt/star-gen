@@ -1,11 +1,12 @@
 use crate::physics::calculation::stellar::*;
 use crate::physics::randomization::stellar::random_stellar_mass;
 use crate::physics::types::stellar_class::StellarClass;
-use bevy::prelude::Color;
+use bevy::prelude::{Color, Vec3};
 use rand::Rng;
 
 #[derive(Debug, Clone)]
 pub struct Star {
+    position: Vec3,
     stellar_class: StellarClass,
     mass: f64,
     radius: f64,
@@ -15,10 +16,11 @@ pub struct Star {
 }
 
 impl Star {
-    pub fn new(mass: f64) -> Self {
+    pub fn new(mass: f64, position: Vec3) -> Self {
         let surface_temperature = stellar_surface_temperature_from_mass(mass);
 
         Self {
+            position,
             stellar_class: StellarClass::from_stellar_mass(mass),
             mass,
             radius: stellar_radius_from_mass(mass),
@@ -28,15 +30,16 @@ impl Star {
         }
     }
 
-    pub fn new_random(rng: &mut impl Rng) -> Self {
+    pub fn new_random(rng: &mut impl Rng, position: Vec3) -> Self {
         let stellar_class = StellarClass::random(rng);
-        let mass = random_stellar_mass(rng, stellar_class);
+        let mass = random_stellar_mass(rng, &stellar_class);
         let radius = stellar_radius_from_mass(mass);
         let luminosity = stellar_luminosity_from_mass(mass);
         let surface_temperature = stellar_surface_temperature_from_mass(mass);
         let color = stellar_color_from_surface_temperature(surface_temperature);
 
         Self {
+            position,
             stellar_class,
             mass,
             radius,
@@ -44,6 +47,10 @@ impl Star {
             surface_temperature,
             color,
         }
+    }
+
+    pub fn get_position(&self) -> Vec3 {
+        self.position
     }
 
     pub fn get_stellar_class(&self) -> StellarClass {

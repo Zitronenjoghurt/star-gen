@@ -40,7 +40,7 @@ pub fn random_stellar_class(rng: &mut impl Rng) -> StellarClass {
     }
 }
 
-pub fn random_stellar_mass(rng: &mut impl Rng, stellar_class: StellarClass) -> f64 {
+pub fn random_stellar_mass(rng: &mut impl Rng, stellar_class: &StellarClass) -> f64 {
     let range = match stellar_class {
         StellarClass::O => MASS_RANGE_O,
         StellarClass::B => MASS_RANGE_B,

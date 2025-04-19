@@ -1,4 +1,4 @@
-use crate::physics::randomization::stellar::random_stellar_class;
+use crate::physics::randomization::stellar::{random_stellar_class, random_stellar_mass};
 use rand::Rng;
 use std::ops::Range;
 
@@ -39,6 +39,10 @@ pub enum StellarClass {
 impl StellarClass {
     pub fn random(rng: &mut impl Rng) -> Self {
         random_stellar_class(rng)
+    }
+
+    pub fn generate_random_mass(&self, rng: &mut impl Rng) -> f64 {
+        random_stellar_mass(rng, self)
     }
 
     pub fn from_stellar_mass(mass: f64) -> Self {
