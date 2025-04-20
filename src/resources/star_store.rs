@@ -1,4 +1,5 @@
 use crate::physics::objects::star::Star;
+use crate::types::cluster_generation_method::ClusterGenerationMethod;
 use bevy::prelude::{Entity, Resource};
 use rand::prelude::StdRng;
 use rand::SeedableRng;
@@ -11,21 +12,19 @@ pub struct StarStore {
     stars: HashMap<u64, Star>,
     entities: HashMap<u64, Entity>,
     rng: StdRng,
-    seed: u64,
+    cluster_method: ClusterGenerationMethod,
+    cluster_method_string: String,
 }
 
 impl StarStore {
-    pub fn set_rng_seed(&mut self, seed: u64) {
-        self.rng = StdRng::seed_from_u64(seed);
-        self.seed = seed;
+    pub fn set_cluster_method(&mut self, method: &ClusterGenerationMethod) {
+        self.rng = StdRng::seed_from_u64(method.get_seed());
+        self.cluster_method = method.clone();
+        self.cluster_method_string = self.cluster_method.encode();
     }
 
     pub fn get_rng(&mut self) -> &mut StdRng {
         &mut self.rng
-    }
-
-    pub fn get_seed(&mut self) -> u64 {
-        self.seed
     }
 
     pub fn add_star(&mut self, star: Star) -> u64 {
@@ -54,6 +53,14 @@ impl StarStore {
     pub fn get_entity(&self, id: u64) -> Option<Entity> {
         self.entities.get(&id).copied()
     }
+
+    pub fn get_star_count(&self) -> usize {
+        self.stars.len()
+    }
+
+    pub fn get_cluster_method_string(&self) -> &str {
+        &self.cluster_method_string
+    }
 }
 
 impl Default for StarStore {
@@ -65,7 +72,8 @@ impl Default for StarStore {
             stars: HashMap::new(),
             entities: HashMap::new(),
             rng: StdRng::seed_from_u64(seed),
-            seed,
+            cluster_method: Default::default(),
+            cluster_method_string: String::new(),
         }
     }
 }

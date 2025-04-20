@@ -1,21 +1,21 @@
 use crate::events::star_clicked::StarClickedEvent;
+use crate::events::star_cluster_generate::StarClusterGenerateEvent;
 use crate::events::star_delete::StarDeleteEvent;
 use crate::events::star_delete_all::StarDeleteAllEvent;
-use crate::events::star_generate_cubic::StarGenerateCubicEvent;
 use crate::events::star_spawn::StarSpawnEvent;
 use crate::events::star_unselect::StarUnselectEvent;
 use crate::plugins::star_events::star_clicked::handle_star_clicked;
+use crate::plugins::star_events::star_cluster_generate::handle_star_cluster_generate;
 use crate::plugins::star_events::star_delete::handle_star_delete;
 use crate::plugins::star_events::star_delete_all::handle_star_delete_all;
-use crate::plugins::star_events::star_generate_cubic::handle_star_generate_cubic;
 use crate::plugins::star_events::star_spawn::handle_star_spawn;
 use crate::plugins::star_events::star_unselect::handle_star_unselect;
-use bevy::prelude::{App, Plugin, Update};
+use bevy::prelude::{App, IntoSystemConfigs, Plugin, Update};
 
 mod star_clicked;
+mod star_cluster_generate;
 mod star_delete;
 mod star_delete_all;
-mod star_generate_cubic;
 mod star_spawn;
 mod star_unselect;
 
@@ -27,17 +27,19 @@ impl Plugin for StarEventsPlugin {
             Update,
             (
                 handle_star_clicked,
-                handle_star_delete,
-                handle_star_delete_all,
-                handle_star_generate_cubic,
-                handle_star_spawn,
+                handle_star_delete.before(handle_star_spawn),
+                handle_star_delete_all.before(handle_star_spawn),
+                handle_star_cluster_generate,
+                handle_star_spawn
+                    .after(handle_star_delete_all)
+                    .after(handle_star_delete),
                 handle_star_unselect,
             ),
         )
         .add_event::<StarClickedEvent>()
         .add_event::<StarDeleteEvent>()
         .add_event::<StarDeleteAllEvent>()
-        .add_event::<StarGenerateCubicEvent>()
+        .add_event::<StarClusterGenerateEvent>()
         .add_event::<StarSpawnEvent>()
         .add_event::<StarUnselectEvent>();
     }

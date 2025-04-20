@@ -13,3 +13,11 @@ pub fn b64_decode_u64(encoded: &str) -> Option<u64> {
     };
     Some(u64::from_le_bytes(bytes))
 }
+
+pub fn b64_encode_bytes(bytes: &[u8]) -> String {
+    STANDARD.encode(bytes)
+}
+
+pub fn b64_decode_bytes(encoded: &str) -> Option<Vec<u8>> {
+    STANDARD.decode(encoded).ok()
+}

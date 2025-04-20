@@ -1,7 +1,7 @@
-use crate::events::star_delete_all::StarDeleteAllEvent;
-use crate::events::star_generate_cubic::StarGenerateCubicEvent;
+use crate::events::star_cluster_generate::StarClusterGenerateEvent;
 use crate::resources::ui::generate_cubic_modal_state::GenerateCubicModalState;
 use crate::resources::window_manager::WindowManager;
+use crate::types::cluster_generation_settings::cubic::CubicClusterGenerationSettings;
 use crate::ui::elements::settings_slider::SettingsSlider;
 use bevy::prelude::{EventWriter, ResMut};
 use bevy_egui::egui::{Id, Modal, TextEdit};
@@ -10,20 +10,22 @@ use bevy_egui::EguiContexts;
 pub fn render_generate_cubic_modal(
     mut contexts: EguiContexts,
     mut window_manager: ResMut<WindowManager>,
-    mut star_delete_all: EventWriter<StarDeleteAllEvent>,
-    mut star_generate_cubic: EventWriter<StarGenerateCubicEvent>,
+    mut star_cluster_generate_event: EventWriter<StarClusterGenerateEvent>,
     mut state: ResMut<GenerateCubicModalState>,
 ) {
     let Some(ctx) = contexts.try_ctx_mut() else {
         return;
     };
 
-    let min_x = state.min_x;
-    let max_x = state.max_x;
-    let min_y = state.min_y;
-    let max_y = state.max_y;
-    let min_z = state.min_z;
-    let max_z = state.max_z;
+    let min_x = state.settings.min_x;
+    let max_x = state.settings.max_x;
+    let min_y = state.settings.min_y;
+    let max_y = state.settings.max_y;
+    let min_z = state.settings.min_z;
+    let max_z = state.settings.max_z;
+    let star_count: u64 = (max_x - min_x).unsigned_abs() as u64
+        * (max_y - min_y).unsigned_abs() as u64
+        * (max_z - min_z).unsigned_abs() as u64;
 
     let modal = Modal::new(Id::new("generate_cubic")).show(ctx, |ui| {
         ui.vertical_centered(|ui| {
@@ -35,8 +37,8 @@ pub fn render_generate_cubic_modal(
             .tooltip("Defines the starting point of the cubes x-axis edge.")
             .draw(
                 ui,
-                &mut state.min_x,
-                GenerateCubicModalState::DEFAULT_MIN_X,
+                &mut state.settings.min_x,
+                CubicClusterGenerationSettings::DEFAULT_MIN_X,
                 -25..=max_x,
                 1.0,
             );
@@ -46,8 +48,8 @@ pub fn render_generate_cubic_modal(
             .tooltip("Defines the end point of the cubes x-axis edge.")
             .draw(
                 ui,
-                &mut state.max_x,
-                GenerateCubicModalState::DEFAULT_MAX_X,
+                &mut state.settings.max_x,
+                CubicClusterGenerationSettings::DEFAULT_MAX_X,
                 min_x..=25,
                 1.0,
             );
@@ -57,8 +59,8 @@ pub fn render_generate_cubic_modal(
             .tooltip("Defines the starting point of the cubes y-axis edge.")
             .draw(
                 ui,
-                &mut state.min_y,
-                GenerateCubicModalState::DEFAULT_MIN_Y,
+                &mut state.settings.min_y,
+                CubicClusterGenerationSettings::DEFAULT_MIN_Y,
                 -25..=max_y,
                 1.0,
             );
@@ -68,8 +70,8 @@ pub fn render_generate_cubic_modal(
             .tooltip("Defines the end point of the cubes y-axis edge.")
             .draw(
                 ui,
-                &mut state.max_y,
-                GenerateCubicModalState::DEFAULT_MAX_Y,
+                &mut state.settings.max_y,
+                CubicClusterGenerationSettings::DEFAULT_MAX_Y,
                 min_y..=25,
                 1.0,
             );
@@ -79,8 +81,8 @@ pub fn render_generate_cubic_modal(
             .tooltip("Defines the starting point of the cubes z-axis edge.")
             .draw(
                 ui,
-                &mut state.min_z,
-                GenerateCubicModalState::DEFAULT_MIN_Z,
+                &mut state.settings.min_z,
+                CubicClusterGenerationSettings::DEFAULT_MIN_Z,
                 -25..=max_z,
                 1.0,
             );
@@ -90,11 +92,16 @@ pub fn render_generate_cubic_modal(
             .tooltip("Defines the end point of the cubes z-axis edge.")
             .draw(
                 ui,
-                &mut state.max_z,
-                GenerateCubicModalState::DEFAULT_MAX_Z,
+                &mut state.settings.max_z,
+                CubicClusterGenerationSettings::DEFAULT_MAX_Z,
                 min_z..=25,
                 1.0,
             );
+
+        ui.vertical_centered(|ui| {
+            ui.label(format!("{star_count} stars"));
+        });
+        ui.add_space(10.0);
 
         SettingsSlider::build()
             .text("Spread")
@@ -102,9 +109,9 @@ pub fn render_generate_cubic_modal(
             .logarithmic(true)
             .draw(
                 ui,
-                &mut state.spread,
-                GenerateCubicModalState::DEFAULT_SPREAD,
-                1.0..=1_000_000.0,
+                &mut state.settings.spread,
+                CubicClusterGenerationSettings::DEFAULT_SPREAD,
+                1.0..=600.0,
                 0.1,
             );
 
@@ -113,8 +120,8 @@ pub fn render_generate_cubic_modal(
             .tooltip("How far stars can randomly deviate from their strict spawn position.")
             .draw(
                 ui,
-                &mut state.offset_factor,
-                GenerateCubicModalState::DEFAULT_OFFSET_FACTOR,
+                &mut state.settings.offset_factor,
+                CubicClusterGenerationSettings::DEFAULT_OFFSET_FACTOR,
                 0.0..=10.0,
                 0.1,
             );
@@ -150,8 +157,7 @@ pub fn render_generate_cubic_modal(
         ui.horizontal(|ui| {
             if ui.button("Generate").clicked() {
                 if let Some(generate_event) = state.get_event() {
-                    star_delete_all.send(StarDeleteAllEvent);
-                    star_generate_cubic.send(generate_event);
+                    star_cluster_generate_event.send(generate_event);
                     window_manager.generate_cubic_modal = false;
                 }
             }

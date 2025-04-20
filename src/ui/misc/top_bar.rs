@@ -11,12 +11,16 @@ pub fn render_top_bar(mut contexts: EguiContexts, mut window_manager: ResMut<Win
     egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
         egui::menu::bar(ui, |ui| {
             ui.menu_button("Windows", |ui| {
+                ui.checkbox(&mut window_manager.cluster_info, "Star Cluster");
                 ui.checkbox(&mut window_manager.diagnostics, "Diagnostics");
             });
             ui.menu_button("Generate", |ui| {
                 ui.menu_button("Cluster", |ui| {
                     if ui.button("Cubic").clicked() {
                         window_manager.generate_cubic_modal = true;
+                    }
+                    if ui.button("Seeded").clicked() {
+                        window_manager.generate_seeded_modal = true;
                     }
                 });
             });

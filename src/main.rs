@@ -13,6 +13,7 @@ mod events;
 mod physics;
 mod plugins;
 mod resources;
+mod types;
 mod ui;
 mod utils;
 
