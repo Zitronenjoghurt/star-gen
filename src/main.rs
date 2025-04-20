@@ -17,7 +17,7 @@ mod types;
 mod ui;
 mod utils;
 
-pub const VERSION_STRING: &str = "pre-alpha";
+pub const VERSION_STRING: &str = "v0.0.1";
 
 fn main() {
     App::new()
