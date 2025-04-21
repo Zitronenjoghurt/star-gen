@@ -16,6 +16,9 @@ rand = "0.9.1"
 linker = "x86_64-w64-mingw32-gcc"
 ar = "x86_64-w64-mingw32-gcc-ar"
 
+[build-dependencies]
+winresource = "0.1"
+
 [profile.release]
 opt-level = "z"
 lto = true
@@ -29,3 +32,5 @@ name = "Star Generator"
 identifier = "io.github.Zitronenjoghurt.star-gen"
 short_description = "An application about generating random star clusters and playing around with them."
 icon = ["icons/1024x1024.png", "icons/512x512.png", "icons/256x256.png", "icons/128x128.png", "icons/64x64.png", "icons/1024x1024.icns"]
+
+[package.metadata.winresource]

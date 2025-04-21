@@ -6,8 +6,9 @@ win:
 	@if [ -z "$(v)" ]; then echo "Error: Version parameter is required. Use 'make win v=x.y.z'"; exit 1; fi
 	cargo build --target x86_64-pc-windows-gnu --release
 	mkdir -p build/windows/v$(v)
-	cp target/x86_64-pc-windows-gnu/release/star-gen.exe build/windows/v$(v)/star-gen-v$(v).exe
-	cd build/windows/v$(v) && zip -r star-gen-v$(v)-win.zip star-gen-v$(v).exe
+	cp target/x86_64-pc-windows-gnu/release/star-gen.exe "build/windows/v$(v)/Star Generator v$(v) unsigned.exe"
+	osslsigncode sign -certs signing/windows/codesign.crt -key signing/windows/codesign.key -n "Star Generator" -i "https://github.com/Zitronenjoghurt/star-gen" -in "build/windows/v$(v)/Star Generator v$(v) unsigned.exe" -out "build/windows/v$(v)/Star Generator v$(v).exe"
+	cd build/windows/v$(v) && zip -r star-gen-v$(v)-win.zip "Star Generator v$(v).exe"
 	@echo "Windows executable built and zipped"
 
 mac:
