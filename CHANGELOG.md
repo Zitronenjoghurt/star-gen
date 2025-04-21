@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Control settings
+- Camera will now automatically zoom into the selected star, orbiting around focused stars on a consistent radius (
+  configurable in the control settings)
+
+### Fixed
+
+- Stars not generating on startup and trough generation options
+
 ### Changed
 
 - Increased the amount of compute threads used scrapping unused/idling I/O threads
 - Revert build opt-level z back to 3
+
+[unreleased]: https://github.com/Zitronenjoghurt/star-gen/compare/v0.0.1...develop

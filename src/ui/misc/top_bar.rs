@@ -27,6 +27,7 @@ pub fn render_top_bar(mut contexts: EguiContexts, mut window_manager: ResMut<Win
             ui.menu_button("Settings", |ui| {
                 ui.checkbox(&mut window_manager.settings, "General");
                 ui.checkbox(&mut window_manager.graphics_settings, "Graphics");
+                ui.checkbox(&mut window_manager.control_settings, "Controls");
                 ui.menu_button("Advanced", |ui| {
                     ui.checkbox(&mut window_manager.bloom_settings, "Bloom");
                 });

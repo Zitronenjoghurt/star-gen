@@ -8,6 +8,7 @@ use crate::ui::modals::generate_cubic::render_generate_cubic_modal;
 use crate::ui::modals::generate_seeded::render_generate_seeded_modal;
 use crate::ui::windows::bloom_settings::render_bloom_settings_window;
 use crate::ui::windows::cluster_info::render_cluster_info_window;
+use crate::ui::windows::control_settings::render_control_settings_window;
 use crate::ui::windows::diagnostics::render_diagnostics_window;
 use crate::ui::windows::graphics_settings::render_graphics_settings_window;
 use crate::ui::windows::selected_star::render_selected_star_window;
@@ -34,6 +35,8 @@ impl Plugin for InterfacePlugin {
                     .run_if(|window_manager: Res<WindowManager>| window_manager.bloom_settings),
                 render_cluster_info_window
                     .run_if(|window_manager: Res<WindowManager>| window_manager.cluster_info),
+                render_control_settings_window
+                    .run_if(|window_manager: Res<WindowManager>| window_manager.control_settings),
                 render_diagnostics_window
                     .run_if(|window_manager: Res<WindowManager>| window_manager.diagnostics),
                 render_graphics_settings_window

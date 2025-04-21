@@ -2,6 +2,7 @@ use crate::plugins::settings::bloom::apply_bloom_settings;
 use crate::plugins::settings::graphics::apply_graphics_settings;
 use crate::plugins::settings::wireframe::apply_wireframe_settings;
 use crate::resources::settings::bloom::BloomSettings;
+use crate::resources::settings::controls::ControlSettings;
 use crate::resources::settings::graphics::GraphicsSettings;
 use crate::resources::settings::wireframe::WireframeSettings;
 use crate::resources::window_manager::WindowManager;
@@ -17,6 +18,7 @@ impl Plugin for SettingsPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(WindowManager::default())
             .insert_resource(BloomSettings::default())
+            .insert_resource(ControlSettings::default())
             .insert_resource(GraphicsSettings::default())
             .insert_resource(WireframeSettings::default())
             .add_systems(

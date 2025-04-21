@@ -4,6 +4,7 @@ use bevy::prelude::Resource;
 pub struct WindowManager {
     pub bloom_settings: bool,
     pub cluster_info: bool,
+    pub control_settings: bool,
     pub diagnostics: bool,
     pub graphics_settings: bool,
     pub settings: bool,
