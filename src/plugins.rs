@@ -4,7 +4,7 @@ use crate::plugins::interface::InterfacePlugin;
 use crate::plugins::misc::MiscPlugin;
 use crate::plugins::settings::SettingsPlugin;
 use crate::plugins::star_events::StarEventsPlugin;
-use crate::plugins::startup::StartupPlugin;
+use crate::plugins::system::StartupPlugin;
 use bevy::app::PluginGroupBuilder;
 use bevy::diagnostic::{EntityCountDiagnosticsPlugin, FrameTimeDiagnosticsPlugin};
 use bevy::pbr::wireframe::WireframePlugin;
@@ -19,7 +19,7 @@ pub mod interface;
 mod misc;
 mod settings;
 pub mod star_events;
-pub mod startup;
+pub mod system;
 
 pub struct MainPlugins;
 

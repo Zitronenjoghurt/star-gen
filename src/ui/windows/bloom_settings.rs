@@ -25,7 +25,7 @@ pub fn render_bloom_settings_window(
                     ui,
                     &mut bloom_settings.intensity,
                     BloomSettings::DEFAULT_INTENSITY,
-                    0.0..=2.0,
+                    BloomSettings::RANGE_INTENSITY,
                     0.01,
                 );
 
@@ -36,7 +36,7 @@ pub fn render_bloom_settings_window(
                     ui,
                     &mut bloom_settings.low_frequency_boost,
                     BloomSettings::DEFAULT_LOW_FREQUENCY_BOOST,
-                    0.0..=1.0,
+                    BloomSettings::RANGE_LOW_FREQUENCY_BOOST,
                     0.01,
                 );
 
@@ -47,7 +47,7 @@ pub fn render_bloom_settings_window(
                     ui,
                     &mut bloom_settings.low_frequency_boost_curvature,
                     BloomSettings::DEFAULT_LOW_FREQUENCY_BOOST_CURVATURE,
-                    0.0..=1.0,
+                    BloomSettings::RANGE_LOW_FREQUENCY_BOOST_CURVATURE,
                     0.01,
                 );
 
@@ -58,7 +58,7 @@ pub fn render_bloom_settings_window(
                     ui,
                     &mut bloom_settings.high_pass_frequency,
                     BloomSettings::DEFAULT_HIGH_PASS_FREQUENCY,
-                    0.0..=1.0,
+                    BloomSettings::RANGE_HIGH_PASS_FREQUENCY,
                     0.01,
                 );
 
@@ -69,7 +69,7 @@ pub fn render_bloom_settings_window(
                     ui,
                     &mut bloom_settings.prefilter_threshold,
                     BloomSettings::DEFAULT_PREFILTER_THRESHOLD,
-                    0.0..=50.0,
+                    BloomSettings::RANGE_PREFILTER_THRESHOLD,
                     0.01,
                 );
 
@@ -80,7 +80,7 @@ pub fn render_bloom_settings_window(
                     ui,
                     &mut bloom_settings.prefilter_threshold_softness,
                     BloomSettings::DEFAULT_PREFILTER_THRESHOLD_SOFTNESS,
-                    0.0..=1.0,
+                    BloomSettings::RANGE_PREFILTER_THRESHOLD_SOFTNESS,
                     0.01,
                 );
 

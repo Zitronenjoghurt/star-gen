@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Control settings window
 - Camera will now automatically zoom into the selected star, orbiting around focused stars on a consistent radius
   (configurable in the control settings)
+- Automatically save settings between sessions
+    - Windows: Somewhere in app_data/roaming? Most likely with the name `io.github.zitronenjoghurt.star-gen` or
+      something similar
+    - MacOS: `$Home/Library/Application Support/io.github.zitronenjoghurt.star-gen/star-gen-save.json`
 
 ### Fixed
 
@@ -23,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improved selected star window property table UI
 - Event handling performance improvements, event handlers will now only be run when the event occurred
-- Increased the amount of compute threads used scrapping unused/idling I/O threads
+- Increased the number of compute threads used by scrapping unused/idling I/O threads
 - Reverted build opt-level z back to 3
 
 [unreleased]: https://github.com/Zitronenjoghurt/star-gen/compare/v0.0.1...develop

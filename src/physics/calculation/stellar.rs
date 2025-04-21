@@ -1,4 +1,4 @@
-use crate::physics::calculation::misc::float_interpolate;
+use crate::utils::misc::float_interpolate;
 use bevy::prelude::Color;
 
 // Planck's constant × Speed of light / Boltzmann constant

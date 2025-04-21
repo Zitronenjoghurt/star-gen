@@ -24,7 +24,7 @@ pub fn render_graphics_settings_window(
                     ui,
                     &mut graphics_settings.render_distance,
                     GraphicsSettings::DEFAULT_RENDER_DISTANCE,
-                    0.0..=10000.0,
+                    GraphicsSettings::RANGE_RENDER_DISTANCE,
                     0.01,
                 );
         });

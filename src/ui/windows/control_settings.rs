@@ -26,7 +26,7 @@ pub fn render_control_settings_window(
                     ui,
                     &mut control_settings.star_focus_auto_zoom_factor,
                     ControlSettings::DEFAULT_STAR_FOCUS_AUTO_ZOOM_FACTOR,
-                    1.0..=20.0,
+                    ControlSettings::RANGE_STAR_FOCUS_AUTO_ZOOM_FACTOR,
                     0.01,
                 );
 

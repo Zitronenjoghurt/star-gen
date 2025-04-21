@@ -1,6 +1,7 @@
 use bevy::prelude::Resource;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Default, Resource)]
+#[derive(Debug, Clone, Default, Resource, Serialize, Deserialize)]
 pub struct WireframeSettings {
     pub active: bool,
 }

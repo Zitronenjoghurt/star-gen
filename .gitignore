@@ -17,3 +17,4 @@ target/
 .idea/
 build
 signing
+star-gen-save.json

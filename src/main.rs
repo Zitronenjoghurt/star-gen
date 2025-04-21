@@ -19,7 +19,7 @@ mod types;
 mod ui;
 mod utils;
 
-pub const VERSION_STRING: &str = "v0.0.1";
+pub const VERSION_STRING: &str = "v0.0.2";
 
 fn main() {
     App::new()
