@@ -2,7 +2,9 @@ use crate::resources::settings::bloom::BloomSettings;
 use bevy::core_pipeline::bloom::{Bloom, BloomCompositeMode, BloomPrefilter};
 use bevy::core_pipeline::tonemapping::Tonemapping;
 use bevy::math::Vec3;
-use bevy::prelude::{default, Bundle, Camera, Camera3d, MouseButton, Transform};
+use bevy::prelude::{
+    default, Bundle, Camera, Camera3d, MouseButton, Transform,
+};
 use bevy_panorbit_camera::PanOrbitCamera;
 
 #[derive(Bundle)]

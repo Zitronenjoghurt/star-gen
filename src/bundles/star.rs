@@ -8,7 +8,7 @@ use bevy::prelude::{Bundle, Mesh, ResMut, Sphere};
 
 const LUMINANCE_FACTOR: f32 = 10.0;
 
-#[derive(Debug, Bundle)]
+#[derive(Bundle)]
 pub struct StarBundle {
     data: StarData,
     point3d: Point3D,
@@ -20,6 +20,7 @@ impl StarBundle {
         id: u64,
         meshes: &mut ResMut<Assets<Mesh>>,
         materials: &mut ResMut<Assets<StandardMaterial>>,
+        render_distance: f32,
     ) -> Self {
         let sphere_mesh = meshes.add(Sphere::new(1.0));
 
@@ -35,6 +36,7 @@ impl StarBundle {
             star.get_radius() as f32,
             sphere_mesh,
             material_handle,
+            render_distance,
         );
 
         Self {

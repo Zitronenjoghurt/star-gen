@@ -9,10 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Adjustable render distance (graphics settings)
 - Cluster info window: Sortable table with properties of all stars
 - Control settings window
-- Camera will now automatically zoom into the selected star, orbiting around focused stars on a consistent radius (
-  configurable in the control settings)
+- Camera will now automatically zoom into the selected star, orbiting around focused stars on a consistent radius
+  (configurable in the control settings)
 
 ### Fixed
 
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Improved selected star window property table UI
+- Event handling performance improvements, event handlers will now only be run when the event occurred
 - Increased the amount of compute threads used scrapping unused/idling I/O threads
 - Reverted build opt-level z back to 3
 

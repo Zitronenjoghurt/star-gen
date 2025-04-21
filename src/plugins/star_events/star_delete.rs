@@ -20,4 +20,5 @@ pub fn handle_star_delete(
             star_unselect_event.send(StarUnselectEvent);
         }
     }
+    star_store.build_sort_indices();
 }

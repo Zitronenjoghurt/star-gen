@@ -1,5 +1,6 @@
 use crate::resources::settings::graphics::GraphicsSettings;
 use crate::resources::window_manager::WindowManager;
+use crate::ui::elements::settings_slider::SettingsSlider;
 use bevy::prelude::ResMut;
 use bevy_egui::{egui, EguiContexts};
 
@@ -16,5 +17,15 @@ pub fn render_graphics_settings_window(
         .open(&mut window_manager.graphics_settings)
         .show(ctx, |ui| {
             ui.add(egui::Checkbox::new(&mut graphics_settings.vsync, "VSync"));
+            SettingsSlider::build()
+                .text("Render distance")
+                .tooltip("How far away objects can be to still be rendered.")
+                .draw(
+                    ui,
+                    &mut graphics_settings.render_distance,
+                    GraphicsSettings::DEFAULT_RENDER_DISTANCE,
+                    0.0..=10000.0,
+                    0.01,
+                );
         });
 }

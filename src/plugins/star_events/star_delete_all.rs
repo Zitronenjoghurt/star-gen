@@ -16,6 +16,7 @@ pub fn handle_star_delete_all(
     for entity in star_store.delete_all_stars() {
         commands.entity(entity).despawn_recursive();
     }
+    star_store.build_sort_indices();
 
     star_unselect_event.send(StarUnselectEvent);
 }

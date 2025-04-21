@@ -1,6 +1,9 @@
 .PHONY: build win mac
 
-build: win mac
+build: win mac trace
+
+trace:
+	cargo run --release --features bevy/trace_tracy -- --codegen-units 16 --strip false --lto false --panic 'unwind'
 
 win:
 	@if [ -z "$(v)" ]; then echo "Error: Version parameter is required. Use 'make win v=x.y.z'"; exit 1; fi

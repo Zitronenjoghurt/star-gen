@@ -1,6 +1,6 @@
 use crate::physics::objects::star::Star;
 use crate::types::cluster_generation_method::ClusterGenerationMethod;
-use bevy::prelude::{Entity, Resource};
+use bevy::prelude::{info_span, Entity, Resource};
 use rand::prelude::StdRng;
 use rand::SeedableRng;
 use std::collections::HashMap;
@@ -35,7 +35,6 @@ impl StarStore {
         let id = self.new_id;
         self.stars.insert(id, star);
         self.new_id += 1;
-        self.build_sort_indices();
         id
     }
 
@@ -45,7 +44,6 @@ impl StarStore {
 
     pub fn delete_star(&mut self, id: u64) -> Option<Entity> {
         self.stars.remove(&id);
-        self.build_sort_indices();
         self.entities.remove(&id)
     }
 
@@ -73,6 +71,8 @@ impl StarStore {
     }
 
     pub fn build_sort_indices(&mut self) {
+        let build_span = info_span!("star_store::build_sort_indices").entered();
+
         self.sorted_mass.clear();
         self.sorted_radius.clear();
         self.sorted_luminosity.clear();
