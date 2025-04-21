@@ -2,7 +2,6 @@ use crate::events::star_delete::StarDeleteEvent;
 use crate::resources::selected_star::SelectedStar;
 use bevy::prelude::{EventWriter, Res};
 use bevy_egui::{egui, EguiContexts};
-use egui_extras::{Column, TableBuilder};
 
 pub fn render_selected_star_window(
     mut contexts: EguiContexts,
@@ -17,78 +16,46 @@ pub fn render_selected_star_window(
         .title_bar(true)
         .resizable(false)
         .show(ctx, |ui| {
-            let table = TableBuilder::new(ui)
+            egui::Grid::new("star_properties")
                 .striped(true)
-                .cell_layout(egui::Layout::left_to_right(egui::Align::Center))
-                .column(Column::auto())
-                .column(Column::auto());
+                .spacing([40.0, 4.0])
+                .show(ui, |ui| {
+                    if let Some(id) = selected_star.get_id() {
+                        ui.strong("ID");
+                        ui.label(format!("{id}"));
+                        ui.end_row();
+                    }
 
-            table.body(|mut body| {
-                if let Some(id) = selected_star.get_id() {
-                    body.row(10.0, |mut row| {
-                        row.col(|ui| {
-                            ui.strong("ID");
-                        });
-                        row.col(|ui| {
-                            ui.label(format!("{id}"));
-                        });
-                    });
-                }
-                if let Some(data) = selected_star.get_data() {
-                    body.row(10.0, |mut row| {
-                        row.col(|ui| {
-                            ui.strong("Class");
-                        });
-                        row.col(|ui| {
-                            ui.label(format!("{:?}", data.get_stellar_class()));
-                        });
-                    });
-                    body.row(10.0, |mut row| {
-                        row.col(|ui| {
-                            ui.strong("Mass");
-                        });
-                        row.col(|ui| {
-                            ui.label(format!("{:.2}M☉", data.get_mass()));
-                        });
-                    });
-                    body.row(10.0, |mut row| {
-                        row.col(|ui| {
-                            ui.strong("Surface Temp.");
-                        });
-                        row.col(|ui| {
-                            ui.label(format!("{:.2}K", data.get_surface_temperature()));
-                        });
-                    });
-                    body.row(10.0, |mut row| {
-                        row.col(|ui| {
-                            ui.strong("Radius");
-                        });
-                        row.col(|ui| {
-                            ui.label(format!("{:.2}R☉", data.get_radius()));
-                        });
-                    });
-                    body.row(10.0, |mut row| {
-                        row.col(|ui| {
-                            ui.strong("Luminosity");
-                        });
-                        row.col(|ui| {
-                            ui.label(format!("{:.2}L☉", data.get_luminosity()));
-                        });
-                    });
-                    body.row(10.0, |mut row| {
-                        row.col(|ui| {
-                            ui.strong("Position");
-                        });
-                        row.col(|ui| {
-                            let position = data.get_position();
-                            ui.label(format!(
-                                "({:.2}, {:.2}, {:.2})",
-                                position.x, position.y, position.z
-                            ));
-                        });
-                    });
-                }
-            });
+                    if let Some(data) = selected_star.get_data() {
+                        ui.strong("Class");
+                        ui.label(format!("{:?}", data.get_stellar_class()));
+                        ui.end_row();
+
+                        ui.strong("Mass");
+                        ui.label(format!("{:.2} M☉", data.get_mass()));
+                        ui.end_row();
+
+                        ui.strong("Surface Temp.");
+                        ui.label(format!("{:.2}K", data.get_surface_temperature()));
+                        ui.end_row();
+
+                        ui.strong("Radius");
+                        ui.label(format!("{:.2} R☉", data.get_radius()));
+                        ui.end_row();
+
+                        ui.strong("Luminosity");
+                        ui.label(format!("{:.2} L☉", data.get_luminosity()));
+                        ui.end_row();
+
+                        let position = data.get_position();
+                        ui.strong("Position");
+                        ui.label(format!(
+                            "{:.2} | {:.2} | {:.2}",
+                            position.x, position.y, position.z
+                        ));
+                        ui.end_row();
+                    }
+                });
 
             if let Some(id) = selected_star.get_id() {
                 ui.add_space(15.0);

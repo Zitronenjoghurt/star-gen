@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Control settings
+- Cluster info window: Sortable table with properties of all stars
+- Control settings window
 - Camera will now automatically zoom into the selected star, orbiting around focused stars on a consistent radius (
   configurable in the control settings)
 
@@ -19,7 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Improved selected star window property table UI
 - Increased the amount of compute threads used scrapping unused/idling I/O threads
-- Revert build opt-level z back to 3
+- Reverted build opt-level z back to 3
 
 [unreleased]: https://github.com/Zitronenjoghurt/star-gen/compare/v0.0.1...develop

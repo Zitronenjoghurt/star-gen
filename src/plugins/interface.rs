@@ -1,5 +1,6 @@
 use crate::plugins::interface::absorb_egui_inputs::absorb_egui_inputs;
 use crate::resources::selected_star::SelectedStar;
+use crate::resources::ui::cluster_info_window_state::ClusterInfoWindowState;
 use crate::resources::ui::generate_cubic_modal_state::GenerateCubicModalState;
 use crate::resources::ui::generate_seed_modal_state::GenerateSeedModalState;
 use crate::resources::window_manager::WindowManager;
@@ -28,6 +29,7 @@ impl Plugin for InterfacePlugin {
                 .before(bevy_egui::begin_pass_system),
         )
         .add_systems(Update, render_top_bar)
+        .insert_resource(ClusterInfoWindowState::default())
         .add_systems(
             Update,
             (
