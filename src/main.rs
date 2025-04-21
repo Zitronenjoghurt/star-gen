@@ -1,10 +1,12 @@
 use crate::plugins::MainPlugins;
 use bevy::app::App;
 use bevy::color::Color;
+use bevy::core::TaskPoolThreadAssignmentPolicy;
 use bevy::pbr::wireframe::WireframeConfig;
-use bevy::prelude::{default, PluginGroup, Window, WindowPlugin};
+use bevy::prelude::{default, PluginGroup, TaskPoolOptions, TaskPoolPlugin, Window, WindowPlugin};
 use bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
 use bevy::render::RenderPlugin;
+use bevy::tasks::available_parallelism;
 use bevy::DefaultPlugins;
 
 mod bundles;
@@ -36,6 +38,18 @@ fn main() {
                         ..default()
                     }),
                     ..default()
+                })
+                // No parallelized I/O threads, using more threads for computing, potentially less idling but potential performance implications on I/O operations
+                // https://bevy-cheatbook.github.io/setup/perf.html#overprovisioning
+                .set(TaskPoolPlugin {
+                    task_pool_options: TaskPoolOptions {
+                        compute: TaskPoolThreadAssignmentPolicy {
+                            min_threads: available_parallelism(),
+                            max_threads: usize::MAX,
+                            percent: 1.0,
+                        },
+                        ..default()
+                    },
                 }),
         )
         .insert_resource(WireframeConfig {

@@ -1,6 +1,6 @@
 [package]
 name = "star-gen"
-version = "0.0.1"
+version = "0.0.2"
 description = "An application about generating random star clusters and playing around with them."
 edition = "2024"
 
@@ -20,7 +20,7 @@ ar = "x86_64-w64-mingw32-gcc-ar"
 winresource = "0.1"
 
 [profile.release]
-opt-level = "z"
+opt-level = 3
 lto = true
 codegen-units = 1
 panic = "abort"

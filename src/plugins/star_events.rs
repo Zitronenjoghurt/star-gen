@@ -26,13 +26,14 @@ impl Plugin for StarEventsPlugin {
         app.add_systems(
             Update,
             (
+                (
+                    handle_star_cluster_generate,
+                    handle_star_delete_all,
+                    handle_star_spawn,
+                )
+                    .chain(),
                 handle_star_clicked,
-                handle_star_delete.before(handle_star_spawn),
-                handle_star_delete_all.before(handle_star_spawn),
-                handle_star_cluster_generate,
-                handle_star_spawn
-                    .after(handle_star_delete_all)
-                    .after(handle_star_delete),
+                handle_star_delete,
                 handle_star_unselect,
             ),
         )
