@@ -1,4 +1,4 @@
-use crate::utils::persistence::save_state;
+use crate::persistence::save_state;
 use bevy::prelude::{info, AppExit, EventReader, World};
 
 pub fn save_on_exit(mut exit_event: EventReader<AppExit>, world: &World) {

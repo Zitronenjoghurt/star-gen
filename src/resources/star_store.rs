@@ -5,6 +5,7 @@ use rand::prelude::StdRng;
 use rand::SeedableRng;
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
+use uuid::Uuid;
 
 #[derive(Debug, Resource)]
 pub struct StarStore {
@@ -12,6 +13,8 @@ pub struct StarStore {
     stars: HashMap<u64, Star>,
     entities: HashMap<u64, Entity>,
     rng: StdRng,
+    cluster_name: String,
+    cluster_id: String,
     cluster_method: ClusterGenerationMethod,
     cluster_method_string: String,
     sorted_mass: Vec<u64>,
@@ -21,14 +24,31 @@ pub struct StarStore {
 }
 
 impl StarStore {
-    pub fn set_cluster_method(&mut self, method: &ClusterGenerationMethod) {
+    pub fn regenerate(&mut self, method: &ClusterGenerationMethod) {
         self.rng = StdRng::seed_from_u64(method.get_seed());
         self.cluster_method = method.clone();
         self.cluster_method_string = self.cluster_method.encode();
+        self.cluster_id = Uuid::new_v4().to_string();
     }
 
     pub fn get_rng(&mut self) -> &mut StdRng {
         &mut self.rng
+    }
+
+    pub fn get_cluster_name(&self) -> &str {
+        &self.cluster_name
+    }
+
+    pub fn set_cluster_name(&mut self, name: &str) {
+        self.cluster_name = name.to_string();
+    }
+
+    pub fn get_cluster_id(&self) -> &str {
+        &self.cluster_id
+    }
+
+    pub fn set_cluster_id(&mut self, id: &str) {
+        self.cluster_id = id.to_string();
     }
 
     pub fn add_star(&mut self, star: Star) -> u64 {
@@ -38,8 +58,19 @@ impl StarStore {
         id
     }
 
+    pub fn add_star_with_id(&mut self, star: Star, id: u64) {
+        self.stars.insert(id, star);
+        if id < self.new_id {
+            self.new_id = id + 1;
+        }
+    }
+
     pub fn get_star(&self, id: u64) -> Option<&Star> {
         self.stars.get(&id)
+    }
+
+    pub fn get_stars(&self) -> &HashMap<u64, Star> {
+        &self.stars
     }
 
     pub fn delete_star(&mut self, id: u64) -> Option<Entity> {
@@ -182,6 +213,8 @@ impl Default for StarStore {
             stars: HashMap::new(),
             entities: HashMap::new(),
             rng: StdRng::seed_from_u64(seed),
+            cluster_name: "Unnamed".to_string(),
+            cluster_id: Uuid::new_v4().to_string(),
             cluster_method: Default::default(),
             cluster_method_string: String::new(),
             sorted_mass: Vec::new(),

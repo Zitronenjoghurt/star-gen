@@ -16,7 +16,14 @@ pub fn handle_star_spawn(
 ) {
     for event in star_spawn_event.read() {
         let star = event.get_star().clone();
-        let id = star_store.add_star(star.clone());
+
+        let id = if let Some(id) = event.get_id() {
+            star_store.add_star_with_id(star.clone(), id);
+            id
+        } else {
+            star_store.add_star(star.clone())
+        };
+
         let bundle = StarBundle::new(
             star,
             id,

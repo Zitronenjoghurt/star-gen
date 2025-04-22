@@ -1,4 +1,4 @@
-use crate::utils::persistence::settings::SaveStateSettings;
+use crate::persistence::settings::SaveStateSettings;
 use bevy::prelude::World;
 use serde::{Deserialize, Serialize};
 

@@ -42,7 +42,7 @@ impl ClusterGenerationMethod {
         star_store: &mut ResMut<StarStore>,
         star_spawn_event: &mut EventWriter<StarSpawnEvent>,
     ) {
-        star_store.set_cluster_method(self);
+        star_store.regenerate(self);
         match self {
             Self::None => {}
             Self::Cubic(cubic) => cubic.generate(star_store, star_spawn_event),

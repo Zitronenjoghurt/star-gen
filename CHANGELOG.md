@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Control settings window
 - Camera will now automatically zoom into the selected star, orbiting around focused stars on a consistent radius
   (configurable in the control settings)
-- Automatically save settings between sessions
+- Automatically save settings and the current cluster between sessions
     - Windows: Somewhere in app_data/roaming? Most likely with the name `io.github.zitronenjoghurt.star-gen` or
       something similar
     - MacOS: `$Home/Library/Application Support/io.github.zitronenjoghurt.star-gen/star-gen-save.json`
