@@ -16,11 +16,13 @@ pub mod persistence;
 mod physics;
 mod plugins;
 mod resources;
+#[cfg(test)]
+mod tests;
 mod types;
 mod ui;
 mod utils;
 
-pub const VERSION_STRING: &str = "v0.0.2";
+pub const VERSION_STRING: &str = "v0.0.3";
 
 fn main() {
     App::new()

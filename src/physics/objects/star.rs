@@ -4,7 +4,7 @@ use crate::physics::types::stellar_class::StellarClass;
 use bevy::prelude::{Color, Vec3};
 use rand::Rng;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Star {
     position: Vec3,
     stellar_class: StellarClass,

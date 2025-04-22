@@ -1,5 +1,6 @@
 use crate::physics::randomization::stellar::{random_stellar_class, random_stellar_mass};
 use rand::Rng;
+use serde::{Deserialize, Serialize};
 use std::ops::Range;
 
 pub const MIN_MASS_M: f64 = 0.08;
@@ -25,7 +26,7 @@ pub const MASS_RANGE_A: Range<f64> = MIN_MASS_A..MAX_MASS_A;
 pub const MASS_RANGE_B: Range<f64> = MIN_MASS_B..MAX_MASS_B;
 pub const MASS_RANGE_O: Range<f64> = MIN_MASS_O..MAX_MASS_O;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum StellarClass {
     O,
     B,

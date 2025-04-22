@@ -1,6 +1,6 @@
 [package]
 name = "star-gen"
-version = "0.0.2"
+version = "0.0.3"
 description = "An application about generating random star clusters and playing around with them."
 edition = "2024"
 

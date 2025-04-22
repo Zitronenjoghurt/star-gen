@@ -129,3 +129,10 @@ pub fn load_state(world: &mut World) {
         event.send(StarClusterGenerateEvent::new(method));
     }
 }
+
+pub fn delete_all_data() {
+    let path = get_save_dir();
+    if path.exists() {
+        std::fs::remove_dir_all(path).unwrap();
+    }
+}

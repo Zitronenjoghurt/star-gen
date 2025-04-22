@@ -3,7 +3,7 @@ use bevy::prelude::Resource;
 use serde::{Deserialize, Serialize};
 use std::ops::RangeInclusive;
 
-#[derive(Debug, Clone, Resource, Serialize, Deserialize)]
+#[derive(Debug, Clone, Resource, PartialEq, Serialize, Deserialize)]
 pub struct GraphicsSettings {
     pub vsync: bool,
     pub render_distance: f32,

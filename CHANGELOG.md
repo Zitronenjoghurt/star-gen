@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- No changes yet
+### Added
+
+- Automated testing for save/loading of settings and star clusters
 
 ## [0.0.2] - 2024-04-22
 
