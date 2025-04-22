@@ -4,7 +4,7 @@ use crate::plugins::interface::InterfacePlugin;
 use crate::plugins::misc::MiscPlugin;
 use crate::plugins::settings::SettingsPlugin;
 use crate::plugins::star_events::StarEventsPlugin;
-use crate::plugins::system::StartupPlugin;
+use crate::plugins::system::SystemPlugin;
 use bevy::app::PluginGroupBuilder;
 use bevy::diagnostic::{EntityCountDiagnosticsPlugin, FrameTimeDiagnosticsPlugin};
 use bevy::pbr::wireframe::WireframePlugin;
@@ -38,6 +38,6 @@ impl PluginGroup for MainPlugins {
             .add(MiscPlugin)
             .add(SettingsPlugin)
             .add(StarEventsPlugin)
-            .add(StartupPlugin)
+            .add(SystemPlugin)
     }
 }

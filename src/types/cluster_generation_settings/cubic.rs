@@ -5,7 +5,7 @@ use bevy::math::Vec3;
 use bevy::prelude::{EventWriter, ResMut};
 use rand::Rng;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct CubicClusterGenerationSettings {
     pub min_x: i8,
     pub max_x: i8,

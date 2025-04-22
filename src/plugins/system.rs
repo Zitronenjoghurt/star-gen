@@ -8,9 +8,9 @@ mod load_on_startup;
 mod save_on_exit;
 mod setup;
 
-pub struct StartupPlugin;
+pub struct SystemPlugin;
 
-impl Plugin for StartupPlugin {
+impl Plugin for SystemPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, setup);
         app.add_systems(PostStartup, load_on_startup);

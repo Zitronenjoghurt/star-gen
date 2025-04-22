@@ -3,7 +3,7 @@ use crate::resources::star_store::StarStore;
 use crate::types::cluster_generation_settings::cubic::CubicClusterGenerationSettings;
 use bevy::prelude::{EventWriter, ResMut};
 
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub enum ClusterGenerationMethod {
     #[default]
     None,

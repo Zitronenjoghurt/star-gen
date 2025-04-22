@@ -1,30 +1,32 @@
 use crate::components::star_data::StarData;
 use crate::events::star_spawn::StarSpawnEvent;
-use crate::persistence::{delete_all_data, load_state, save_state};
+use crate::persistence::delete_all_data;
 use crate::physics::objects::star::Star;
 use crate::plugins::star_events::StarEventsPlugin;
+use crate::plugins::system::SystemPlugin;
 use crate::resources::settings::bloom::BloomSettings;
 use crate::resources::settings::controls::ControlSettings;
 use crate::resources::settings::graphics::GraphicsSettings;
 use crate::resources::settings::wireframe::WireframeSettings;
 use crate::resources::star_store::StarStore;
-use bevy::prelude::{App, Assets, Events, Mesh, StandardMaterial, Vec3};
+use bevy::prelude::{App, AppExit, Assets, ClearColor, Events, Mesh, StandardMaterial, Vec3};
 use bevy::MinimalPlugins;
 
 fn build_app() -> App {
     let mut app = App::new();
 
     app.add_plugins(MinimalPlugins);
+    app.add_plugins(SystemPlugin);
     app.add_plugins(StarEventsPlugin);
 
-    app.init_resource::<Assets<StandardMaterial>>();
+    app.init_resource::<ClearColor>();
     app.init_resource::<Assets<Mesh>>();
+    app.init_resource::<Assets<StandardMaterial>>();
 
     app.insert_resource(BloomSettings::default())
         .insert_resource(ControlSettings::default())
         .insert_resource(GraphicsSettings::default())
-        .insert_resource(WireframeSettings::default())
-        .insert_resource(StarStore::default());
+        .insert_resource(WireframeSettings::default());
 
     app
 }
@@ -71,19 +73,23 @@ fn test_save_load() {
 
     app.update();
 
-    let star_store = app.world().get_resource::<StarStore>().unwrap();
-    let stored_star = star_store.get_star(10).unwrap();
-    let entity = star_store.get_entity(10).unwrap();
+    let initial_star_store = app.world().get_resource::<StarStore>().unwrap().clone();
+    let stored_star = initial_star_store.get_star(10).unwrap();
+    let entity = initial_star_store.get_entity(10).unwrap();
     assert_eq!(stored_star.clone(), initial_star.clone());
 
     let star_data = app.world().get::<StarData>(entity).unwrap();
     assert_eq!(star_data.get_star().clone(), initial_star.clone());
 
-    save_state(app.world());
+    app.world_mut()
+        .get_resource_mut::<Events<AppExit>>()
+        .unwrap()
+        .send(AppExit::Success);
+
+    app.update();
 
     // Create a new app, load state and validate data
     let mut new_app = build_app();
-    load_state(new_app.world_mut());
     new_app.update();
 
     let bloom_settings = new_app.world().get_resource::<BloomSettings>().unwrap();
@@ -101,6 +107,19 @@ fn test_save_load() {
     assert!(wireframe_settings.active);
 
     let star_store = new_app.world().get_resource::<StarStore>().unwrap();
+    assert_eq!(
+        star_store.get_cluster_name(),
+        initial_star_store.get_cluster_name()
+    );
+    assert_eq!(
+        star_store.get_cluster_id(),
+        initial_star_store.get_cluster_id()
+    );
+    assert_eq!(
+        star_store.get_cluster_method_string(),
+        initial_star_store.get_cluster_method_string()
+    );
+
     let stored_star = star_store.get_star(10).unwrap();
     let entity = star_store.get_entity(10).unwrap();
     assert_eq!(stored_star.clone(), initial_star.clone());

@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 use uuid::Uuid;
 
-#[derive(Debug, Resource)]
+#[derive(Debug, Resource, Clone, PartialEq)]
 pub struct StarStore {
     new_id: u64,
     stars: HashMap<u64, Star>,
