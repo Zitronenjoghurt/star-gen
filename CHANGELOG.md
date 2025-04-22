@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- No changes yet
+
+## [0.0.2] - 2024-04-22
+
 ### Added
 
 - Adjustable render distance (graphics settings)
@@ -30,4 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Increased the number of compute threads used by scrapping unused/idling I/O threads
 - Reverted build opt-level z back to 3
 
-[unreleased]: https://github.com/Zitronenjoghurt/star-gen/compare/v0.0.1...develop
+[unreleased]: https://github.com/Zitronenjoghurt/star-gen/compare/v0.0.2...develop
+
+[0.0.2]: https://github.com/Zitronenjoghurt/star-gen/compare/v0.0.1...v0.0.2
