@@ -2,9 +2,7 @@ use crate::resources::settings::bloom::BloomSettings;
 use bevy::core_pipeline::bloom::{Bloom, BloomCompositeMode, BloomPrefilter};
 use bevy::core_pipeline::tonemapping::Tonemapping;
 use bevy::math::Vec3;
-use bevy::prelude::{
-    default, Bundle, Camera, Camera3d, MouseButton, Transform,
-};
+use bevy::prelude::{default, Bundle, Camera, Camera3d, MouseButton, Transform};
 use bevy_panorbit_camera::PanOrbitCamera;
 
 #[derive(Bundle)]
@@ -31,7 +29,7 @@ impl Default for CustomCamera {
                 button_pan: MouseButton::Middle,
                 ..default()
             },
-            tonemapping: Tonemapping::TonyMcMapface,
+            tonemapping: Tonemapping::AcesFitted,
             bloom: Bloom {
                 intensity: BloomSettings::DEFAULT_INTENSITY,
                 low_frequency_boost: BloomSettings::DEFAULT_LOW_FREQUENCY_BOOST,

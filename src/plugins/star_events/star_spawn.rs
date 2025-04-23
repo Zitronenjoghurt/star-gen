@@ -1,16 +1,16 @@
 use crate::bundles::star::StarBundle;
 use crate::events::star_spawn::StarSpawnEvent;
+use crate::materials::star::StarMaterial;
 use crate::resources::settings::graphics::GraphicsSettings;
 use crate::resources::star_store::StarStore;
 use bevy::asset::Assets;
-use bevy::pbr::StandardMaterial;
 use bevy::prelude::{Commands, EventReader, Mesh, Res, ResMut};
 
 pub fn handle_star_spawn(
     mut star_spawn_event: EventReader<StarSpawnEvent>,
     mut commands: Commands,
     mut star_store: ResMut<StarStore>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
+    mut materials: ResMut<Assets<StarMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
     graphics_settings: Res<GraphicsSettings>,
 ) {

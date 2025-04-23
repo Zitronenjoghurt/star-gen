@@ -30,11 +30,11 @@ impl Default for BloomSettings {
 
 impl BloomSettings {
     pub const DEFAULT_ACTIVE: bool = true;
-    pub const DEFAULT_INTENSITY: f32 = 0.25;
+    pub const DEFAULT_INTENSITY: f32 = 0.7;
     pub const DEFAULT_LOW_FREQUENCY_BOOST: f32 = 0.5;
-    pub const DEFAULT_LOW_FREQUENCY_BOOST_CURVATURE: f32 = 0.4;
+    pub const DEFAULT_LOW_FREQUENCY_BOOST_CURVATURE: f32 = 0.0;
     pub const DEFAULT_HIGH_PASS_FREQUENCY: f32 = 0.8;
-    pub const DEFAULT_PREFILTER_THRESHOLD: f32 = 0.4;
+    pub const DEFAULT_PREFILTER_THRESHOLD: f32 = 0.0;
     pub const DEFAULT_PREFILTER_THRESHOLD_SOFTNESS: f32 = 0.1;
     pub const RANGE_INTENSITY: RangeInclusive<f32> = 0.0..=2.0;
     pub const RANGE_LOW_FREQUENCY_BOOST: RangeInclusive<f32> = 0.0..=1.0;

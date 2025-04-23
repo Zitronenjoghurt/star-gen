@@ -12,6 +12,7 @@ use bevy::DefaultPlugins;
 mod bundles;
 mod components;
 mod events;
+mod materials;
 pub mod persistence;
 mod physics;
 mod plugins;

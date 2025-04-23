@@ -1,6 +1,6 @@
 .PHONY: build win mac
 
-build: win mac trace
+build: win mac
 
 trace:
 	cargo run --release --features bevy/trace_tracy -- --codegen-units 16 --strip false --lto false --panic 'unwind'
@@ -11,7 +11,10 @@ win:
 	mkdir -p build/windows/v$(v)
 	cp target/x86_64-pc-windows-gnu/release/star-gen.exe "build/windows/v$(v)/Star Generator v$(v) unsigned.exe"
 	osslsigncode sign -certs signing/windows/codesign.crt -key signing/windows/codesign.key -n "Star Generator" -i "https://github.com/Zitronenjoghurt/star-gen" -in "build/windows/v$(v)/Star Generator v$(v) unsigned.exe" -out "build/windows/v$(v)/Star Generator v$(v).exe"
-	cd build/windows/v$(v) && zip -r star-gen-v$(v)-win.zip "Star Generator v$(v).exe"
+	rm "build/windows/v$(v)/Star Generator v$(v) unsigned.exe"
+	mkdir -p "build/windows/v$(v)/assets"
+	cp -r assets/* "build/windows/v$(v)/assets/"
+	cd build/windows && zip -r star-gen-v$(v)-win.zip v$(v)
 	@echo "Windows executable built and zipped"
 
 mac:
@@ -20,5 +23,7 @@ mac:
 	mkdir -p build/macos/v$(v)
 	cp -r "target/aarch64-apple-darwin/release/bundle/osx/Star Generator.app" "build/macos/v$(v)/Star Generator v$(v).app"
 	codesign --force --deep --sign "https://github.com/Zitronenjoghurt" "build/macos/v$(v)/Star Generator v$(v).app"
+	mkdir -p "build/macos/v$(v)/Star Generator v$(v).app/Contents/MacOS/assets"
+	cp -r assets/* "build/macos/v$(v)/Star Generator v$(v).app/Contents/MacOS/assets"
 	cd build/macos/v$(v) && zip -r star-gen-v$(v)-mac.zip "Star Generator v$(v).app"
 	@echo "MacOS app bundle created and signed"

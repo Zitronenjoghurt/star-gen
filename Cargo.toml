@@ -6,7 +6,7 @@ edition = "2024"
 
 [dependencies]
 base64 = "0.22.1"
-bevy = "0.15.3"
+bevy = { version = "0.15.3", features = ["tonemapping_luts"] }
 bevy_egui = "0.33.0"
 bevy_panorbit_camera = "0.25.0"
 bincode = { version = "2.0.1", features = ["serde"] }
@@ -37,6 +37,13 @@ debug = false
 name = "Star Generator"
 identifier = "io.github.Zitronenjoghurt.star-gen"
 short_description = "An application about generating random star clusters and playing around with them."
-icon = ["icons/1024x1024.png", "icons/512x512.png", "icons/256x256.png", "icons/128x128.png", "icons/64x64.png", "icons/1024x1024.icns"]
+icon = [
+    "assets/icons/1024x1024.png",
+    "assets/icons/512x512.png",
+    "assets/icons/256x256.png",
+    "assets/icons/128x128.png",
+    "assets/icons/64x64.png",
+    "assets/icons/1024x1024.icns"
+]
 
 [package.metadata.winresource]
